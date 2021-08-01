@@ -1,28 +1,34 @@
 import PropTypes from 'prop-types';
 import styles from './Statistics.module.css';
 
-const Statistics = ({ good, neutral, bad, total, positivePercentage }) => {
+const Statistics = ({
+  total,
+  positivePercentage,
+  feedbackKeys,
+  feedbacksObj,
+}) => {
   return (
-    <div>
-      <ul>
-        <li className={styles.statistics}>Good:{good}</li>
-        <li className={styles.statistics}>Neutral:{neutral}</li>
-        <li className={styles.statistics}>Bad:{bad}</li>
-        <li className={styles.statistics}>Total:{total}</li>
-        <li className={styles.statistics}>
-          Positive feedback:{positivePercentage}%
+    <ul>
+      {feedbackKeys.map(feedback => (
+        <li key={feedback} className={styles.statistics}>
+          <span>
+            {feedback}:{feedbacksObj[feedback]}
+          </span>
         </li>
-      </ul>
-    </div>
+      ))}
+      <li className={styles.statistics}>Total:{total}</li>
+      <li className={styles.statistics}>
+        Positive feedback:{positivePercentage}%
+      </li>
+    </ul>
   );
 };
 
 Statistics.propTypes = {
-  good: PropTypes.number.isRequired,
-  neutral: PropTypes.number.isRequired,
-  bad: PropTypes.number.isRequired,
   total: PropTypes.number.isRequired,
   positivePercentage: PropTypes.number.isRequired,
+  feedbacksObj: PropTypes.object.isRequired,
+  feedbackKeys: PropTypes.arrayOf(PropTypes.string.isRequired),
 };
 
 export default Statistics;
